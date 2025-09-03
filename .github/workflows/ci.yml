@@ -25,7 +25,7 @@ jobs:
       - name: panvimdoc
         uses: kdheepak/panvimdoc@main
         with:
-          vimdoc: citero.nvim
+          vimdoc: citero
           treesitter: true
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
