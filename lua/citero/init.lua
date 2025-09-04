@@ -1,13 +1,18 @@
+---@class CiteroModule
 local M = {}
 
 local config = require('citero.config')
 local picker = require('citero.picker')
 local utils = require('citero.utils')
 
+---Setup citero with user configuration
+---@param opts? CiteroConfig User configuration options
 M.setup = function(opts)
   config.setup(opts)
 end
 
+---Open citation key picker
+---@param opts? table Picker options
 M.cite_key = function(opts)
   local ok, err = pcall(function()
     local ft = vim.bo.filetype
@@ -20,6 +25,8 @@ M.cite_key = function(opts)
   end
 end
 
+---Browse Zotero papers
+---@param opts? table Picker options
 M.browse_papers = function(opts)
   local ok, err = pcall(function()
     picker.zotero_papers(opts)
@@ -30,6 +37,8 @@ M.browse_papers = function(opts)
   end
 end
 
+---Browse note-taking files
+---@param opts? table Picker options
 M.browse_notes = function(opts)
   local ok, err = pcall(function()
     picker.note_taking(opts)

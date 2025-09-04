@@ -1,17 +1,33 @@
+---@class PickerItem
+---@field key string Citation key
+---@field title string Entry title
+---@field text string Text for fuzzy matching
+---@field type string Entry type
+---@field citation string Formatted citation
+
+---@class CiteroPickerModule
 local M = {}
 
 local config = require('citero.config')
 local bibtex = require('citero.bibtex')
 
+---Check if Snacks.nvim picker is available
+---@return boolean True if Snacks picker is available
 local function has_snacks()
   local ok, snacks = pcall(require, 'snacks')
   return ok and snacks.picker ~= nil
 end
 
+---Format citation with given format string
+---@param key string Citation key
+---@param format_string string Format string with %s placeholder
+---@return string Formatted citation
 local function format_citation(key, format_string)
   return string.format(format_string, key)
 end
 
+---Insert text at cursor position
+---@param text string Text to insert
 local function insert_at_cursor(text)
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
   local line = vim.api.nvim_get_current_line()
@@ -20,6 +36,8 @@ local function insert_at_cursor(text)
   vim.api.nvim_win_set_cursor(0, { row, col + #text })
 end
 
+---Open citation key picker
+---@param opts? table Picker options
 M.cite_key = function(opts)
   opts = opts or {}
 
@@ -38,6 +56,7 @@ M.cite_key = function(opts)
   end
 
   -- Transform entries for picker
+  ---@type PickerItem[]
   local picker_items = {}
   for _, entry in ipairs(entries) do
     table.insert(picker_items, {
@@ -74,6 +93,8 @@ M.cite_key = function(opts)
   Snacks.picker(picker_config)
 end
 
+---Browse Zotero papers
+---@param opts? table Picker options
 M.zotero_papers = function(opts)
   opts = opts or {}
 
@@ -114,6 +135,8 @@ M.zotero_papers = function(opts)
   Snacks.picker.files(picker_config)
 end
 
+---Browse note-taking files
+---@param opts? table Picker options
 M.note_taking = function(opts)
   opts = opts or {}
 

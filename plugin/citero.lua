@@ -27,7 +27,9 @@ end, {
 })
 
 -- Default keymap suggestions (users can override)
+---Setup default keymaps for Citero
 local function setup_keymaps()
+  ---@type vim.keymap.set.Opts
   local opts = { noremap = true, silent = true, desc = 'Citero: ' }
 
   vim.keymap.set(
